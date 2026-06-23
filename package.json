@@ -6,7 +6,8 @@
     "build:assets": "mkdir -p dist/data dist/js && cp data/questions.json dist/data/ && cp src/app.js dist/js/app.js",
     "build:html": "node scripts/build-html.mjs",
     "build": "npm run build:css && npm run build:assets && npm run build:html",
-    "dev": "npm run build:assets && npm run build:html && npx @tailwindcss/cli -i ./src/input.css -o ./dist/css/styles.css --watch"
+    "dev": "npm run build && npx @tailwindcss/cli -i ./src/input.css -o ./dist/css/styles.css --watch",
+    "preview": "npm run build && npx serve dist -l 3000"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.11",

@@ -10,7 +10,9 @@ document.addEventListener('alpine:init', () => {
 
     async init() {
       try {
-        const response = await fetch('data/questions.json');
+        const base =
+          document.querySelector('meta[name="asset-base"]')?.content ?? '';
+        const response = await fetch(`${base}data/questions.json`);
         if (!response.ok) throw new Error('Failed to load questions');
         const data = await response.json();
         this.questions = data.questions ?? [];

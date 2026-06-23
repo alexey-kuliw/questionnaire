@@ -61,8 +61,8 @@
   .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(56px) saturate(1.35);
-    opacity: 0.72;
+    filter: blur(56px) saturate(1.1);
+    opacity: 0.63;
     will-change: transform, opacity;
   }
 
@@ -71,7 +71,7 @@
     left: -12%;
     width: min(52vw, 420px);
     height: min(52vw, 420px);
-    background: radial-gradient(circle, #6ea8fe 0%, #8ab4f8 28%, #c8b6ff 52%, transparent 72%);
+    background: radial-gradient(circle, #91b8f0 0%, #a8c8f8 30%, #c4b0f5 55%, transparent 72%);
     animation: orb-drift-tl 14s ease-in-out infinite;
   }
 
@@ -80,7 +80,7 @@
     right: -10%;
     width: min(48vw, 380px);
     height: min(48vw, 380px);
-    background: radial-gradient(circle, #f472b6 0%, #f9a8d4 30%, #d8b4fe 55%, transparent 72%);
+    background: radial-gradient(circle, #eba8c8 0%, #f0c0d8 32%, #dcc8f5 58%, transparent 72%);
     animation: orb-drift-tr 16s ease-in-out infinite;
   }
 
@@ -89,7 +89,7 @@
     left: -8%;
     width: min(50vw, 400px);
     height: min(50vw, 400px);
-    background: radial-gradient(circle, #4ade80 0%, #6ee7b7 30%, #5eead4 55%, transparent 72%);
+    background: radial-gradient(circle, #9dd9bd 0%, #b8e8d5 32%, #a8e5df 58%, transparent 72%);
     animation: orb-drift-bl 18s ease-in-out infinite;
   }
 
@@ -98,12 +98,12 @@
     right: -14%;
     width: min(46vw, 360px);
     height: min(46vw, 360px);
-    background: radial-gradient(circle, #fbbf24 0%, #fb923c 32%, #f87171 58%, transparent 72%);
+    background: radial-gradient(circle, #f5d080 0%, #f5b898 35%, #f0a8a0 60%, transparent 72%);
     animation: orb-drift-br 15s ease-in-out infinite;
   }
 
   .gemini-btn {
-    --btn-size: clamp(11.5rem, 34vw, 15rem);
+    --btn-size: clamp(14rem, 40vw, 18rem);
     position: relative;
     display: grid;
     place-items: center;
@@ -196,13 +196,13 @@
     z-index: 1;
     display: grid;
     place-items: center;
-    width: 72%;
+    width: 82%;
     text-align: center;
     pointer-events: none;
   }
 
   .gemini-btn__text {
-    font-size: clamp(0.95rem, 2.6vw, 1.12rem);
+    font-size: clamp(1.9rem, 5.2vw, 2.24rem);
     font-weight: 500;
     line-height: 1.35;
     letter-spacing: 0.01em;
@@ -395,11 +395,11 @@
   0%,
   100% {
     transform: translate(0, 0) scale(1);
-    opacity: 0.62;
+    opacity: 0.53;
   }
   50% {
     transform: translate(5%, 6%) scale(1.06);
-    opacity: 0.82;
+    opacity: 0.7;
   }
 }
 
@@ -407,11 +407,11 @@
   0%,
   100% {
     transform: translate(0, 0) scale(1);
-    opacity: 0.6;
+    opacity: 0.5;
   }
   50% {
     transform: translate(-5%, 5%) scale(1.08);
-    opacity: 0.8;
+    opacity: 0.67;
   }
 }
 
@@ -419,11 +419,11 @@
   0%,
   100% {
     transform: translate(0, 0) scale(1);
-    opacity: 0.58;
+    opacity: 0.48;
   }
   50% {
     transform: translate(6%, -4%) scale(1.05);
-    opacity: 0.78;
+    opacity: 0.64;
   }
 }
 
@@ -431,11 +431,11 @@
   0%,
   100% {
     transform: translate(0, 0) scale(1);
-    opacity: 0.62;
+    opacity: 0.53;
   }
   50% {
     transform: translate(-5%, -5%) scale(1.07);
-    opacity: 0.84;
+    opacity: 0.7;
   }
 }
 
