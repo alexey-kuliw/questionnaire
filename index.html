@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Questions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,400;6..144,500;6..144,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/app.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"
+    ></script>
+  </head>
+  <body class="gemini-page" x-data="questionApp" x-init="init()">
+    <div class="ambient" aria-hidden="true">
+      <div class="orb orb-tl"></div>
+      <div class="orb orb-tr"></div>
+      <div class="orb orb-bl"></div>
+      <div class="orb orb-br"></div>
+      <div class="ambient-vignette"></div>
+    </div>
+
+    <main class="relative z-10 flex min-h-screen items-center justify-center p-6">
+      <p
+        x-show="loadError"
+        x-cloak
+        class="absolute top-8 max-w-md text-center text-sm text-red-600"
+        x-text="loadError"
+      ></p>
+
+      <button
+        type="button"
+        class="gemini-btn"
+        :class="{ 'gemini-btn--generating': generating }"
+        :disabled="generating || modalOpen || loadError"
+        @click="generate()"
+        aria-label="Згенерувати питання"
+      >
+        <span class="gemini-btn__halo" aria-hidden="true"></span>
+        <span class="gemini-btn__ring" aria-hidden="true"></span>
+        <span class="gemini-btn__surface" aria-hidden="true"></span>
+        <span class="gemini-btn__label">
+          <span
+            class="gemini-btn__text"
+            x-text="generating ? 'Генеруємо…' : 'Згенерувати питання'"
+          ></span>
+        </span>
+      </button>
+    </main>
+
+    <div
+      x-show="modalOpen"
+      x-cloak
+      x-transition:enter="gemini-modal-enter"
+      x-transition:enter-start="gemini-modal-enter-start"
+      x-transition:enter-end="gemini-modal-enter-end"
+      x-transition:leave="gemini-modal-leave"
+      x-transition:leave-start="gemini-modal-leave-start"
+      x-transition:leave-end="gemini-modal-leave-end"
+      class="gemini-modal-backdrop"
+      @keydown.escape.window="closeModal()"
+      role="presentation"
+    >
+      <div
+        class="gemini-modal"
+        role="dialog"
+        aria-modal="true"
+        :aria-labelledby="modalType === 'question' ? 'modal-question-title' : 'modal-exhausted-title'"
+        @click.outside="closeModal()"
+      >
+        <button
+          type="button"
+          class="gemini-modal__close"
+          @click="closeModal()"
+          aria-label="Закрити"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path
+              d="M5 5l10 10M15 5L5 15"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+
+        <div x-show="modalType === 'question'">
+          <p id="modal-question-title" class="gemini-modal__eyebrow">Ваше питання</p>
+          <p class="gemini-modal__text" x-text="currentQuestion?.text"></p>
+        </div>
+
+        <div x-show="modalType === 'exhausted'">
+          <p id="modal-exhausted-title" class="gemini-modal__eyebrow">Сесія завершена</p>
+          <p class="gemini-modal__text">
+            Усі питання вже задані. Оновіть сторінку, щоб почати нову сесію.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

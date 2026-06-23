@@ -1,0 +1,15 @@
+{
+  "name": "questions",
+  "private": true,
+  "scripts": {
+    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/css/styles.css --minify",
+    "build:assets": "mkdir -p dist/data dist/js && cp data/questions.json dist/data/ && cp src/app.js dist/js/app.js",
+    "build:html": "mkdir -p dist && cp index.html dist/index.html",
+    "build": "npm run build:css && npm run build:assets && npm run build:html",
+    "dev": "npm run build:assets && npm run build:html && npx @tailwindcss/cli -i ./src/input.css -o ./dist/css/styles.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "tailwindcss": "^4.1.11"
+  }
+}

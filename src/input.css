@@ -1,0 +1,452 @@
+@import "tailwindcss";
+@source "../index.html";
+
+@theme {
+  --font-gemini: "Google Sans Flex", ui-sans-serif, system-ui, sans-serif;
+  --color-gemini-bg: #f8f9fc;
+  --color-gemini-surface: #ffffff;
+  --color-gemini-text: #1f1f1f;
+  --color-gemini-text-muted: #5f6368;
+}
+
+@property --gemini-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --gemini-hue {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-gemini);
+  }
+
+  body {
+    margin: 0;
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  .gemini-page {
+    min-height: 100vh;
+    background: var(--color-gemini-bg);
+    color: var(--color-gemini-text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .ambient {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .ambient-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 60% at 50% 50%,
+      transparent 55%,
+      rgba(248, 249, 252, 0.25) 100%
+    );
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(56px) saturate(1.35);
+    opacity: 0.72;
+    will-change: transform, opacity;
+  }
+
+  .orb-tl {
+    top: -18%;
+    left: -12%;
+    width: min(52vw, 420px);
+    height: min(52vw, 420px);
+    background: radial-gradient(circle, #6ea8fe 0%, #8ab4f8 28%, #c8b6ff 52%, transparent 72%);
+    animation: orb-drift-tl 14s ease-in-out infinite;
+  }
+
+  .orb-tr {
+    top: -14%;
+    right: -10%;
+    width: min(48vw, 380px);
+    height: min(48vw, 380px);
+    background: radial-gradient(circle, #f472b6 0%, #f9a8d4 30%, #d8b4fe 55%, transparent 72%);
+    animation: orb-drift-tr 16s ease-in-out infinite;
+  }
+
+  .orb-bl {
+    bottom: -16%;
+    left: -8%;
+    width: min(50vw, 400px);
+    height: min(50vw, 400px);
+    background: radial-gradient(circle, #4ade80 0%, #6ee7b7 30%, #5eead4 55%, transparent 72%);
+    animation: orb-drift-bl 18s ease-in-out infinite;
+  }
+
+  .orb-br {
+    bottom: -12%;
+    right: -14%;
+    width: min(46vw, 360px);
+    height: min(46vw, 360px);
+    background: radial-gradient(circle, #fbbf24 0%, #fb923c 32%, #f87171 58%, transparent 72%);
+    animation: orb-drift-br 15s ease-in-out infinite;
+  }
+
+  .gemini-btn {
+    --btn-size: clamp(11.5rem, 34vw, 15rem);
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: var(--btn-size);
+    height: var(--btn-size);
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    isolation: isolate;
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .gemini-btn:focus-visible {
+    outline: 2px solid rgba(66, 133, 244, 0.55);
+    outline-offset: 6px;
+  }
+
+  .gemini-btn:hover {
+    transform: scale(1.04);
+  }
+
+  .gemini-btn:active {
+    transform: scale(0.97);
+    transition-duration: 0.2s;
+  }
+
+  .gemini-btn__halo {
+    position: absolute;
+    inset: -18%;
+    border-radius: 50%;
+    background: conic-gradient(
+      from var(--gemini-angle),
+      #4285f4,
+      #9b72cb,
+      #d96570,
+      #f4c542,
+      #34a853,
+      #4285f4
+    );
+    filter: blur(32px);
+    opacity: 0.5;
+    animation: gemini-spin 6s linear infinite, gemini-pulse 4.5s ease-in-out infinite;
+    transition: opacity 0.5s ease, filter 0.5s ease;
+  }
+
+  .gemini-btn__ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    padding: 2px;
+    background: conic-gradient(
+      from var(--gemini-angle),
+      #4285f4 0%,
+      #9b72cb 18%,
+      #d96570 36%,
+      #f4c542 54%,
+      #34a853 72%,
+      #00bcd4 86%,
+      #4285f4 100%
+    );
+    animation: gemini-spin 5s linear infinite;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    transition: filter 0.5s ease;
+  }
+
+  .gemini-btn__surface {
+    position: absolute;
+    inset: 5px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.95), transparent 48%),
+      linear-gradient(160deg, #ffffff 0%, var(--color-gemini-surface) 55%, #f3f4f8 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -8px 20px rgba(66, 133, 244, 0.06);
+    transition: box-shadow 0.5s ease;
+  }
+
+  .gemini-btn__label {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 72%;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .gemini-btn__text {
+    font-size: clamp(0.95rem, 2.6vw, 1.12rem);
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: 0.01em;
+    color: var(--color-gemini-text);
+    text-wrap: balance;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .gemini-btn:hover .gemini-btn__halo {
+    opacity: 0.68;
+    filter: blur(38px);
+  }
+
+  .gemini-btn:hover .gemini-btn__surface {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      inset 0 -8px 20px rgba(66, 133, 244, 0.08),
+      0 8px 32px rgba(66, 133, 244, 0.14);
+  }
+
+  .gemini-btn--generating {
+    pointer-events: none;
+  }
+
+  .gemini-btn--generating .gemini-btn__halo {
+    opacity: 0.82;
+    filter: blur(44px);
+    animation:
+      gemini-spin 2.2s linear infinite,
+      gemini-pulse-fast 1.6s ease-in-out infinite;
+  }
+
+  .gemini-btn--generating .gemini-btn__ring {
+    animation: gemini-spin 1.8s linear infinite;
+  }
+
+  .gemini-btn--generating .gemini-btn__text {
+    opacity: 0.88;
+    transform: scale(0.98);
+  }
+
+  .gemini-btn:disabled {
+    cursor: not-allowed;
+  }
+
+  .gemini-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(248, 249, 252, 0.72);
+    backdrop-filter: blur(12px);
+  }
+
+  .gemini-modal {
+    position: relative;
+    width: min(100%, 34rem);
+    padding: 2rem 2rem 1.75rem;
+    border-radius: 1.5rem;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(174, 203, 250, 0.35), transparent 45%),
+      radial-gradient(circle at 90% 100%, rgba(248, 187, 208, 0.28), transparent 40%),
+      linear-gradient(165deg, #ffffff 0%, #f8f9fc 100%);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow:
+      0 20px 48px rgba(60, 64, 67, 0.12),
+      0 2px 8px rgba(60, 64, 67, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .gemini-modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(60, 64, 67, 0.06);
+    color: var(--color-gemini-text-muted);
+    cursor: pointer;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .gemini-modal__close:hover {
+    background: rgba(60, 64, 67, 0.1);
+    color: var(--color-gemini-text);
+    transform: scale(1.05);
+  }
+
+  .gemini-modal__eyebrow {
+    margin: 0 0 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #1a73e8, #9334e6, #d93025);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .gemini-modal__text {
+    margin: 0;
+    padding-right: 1.5rem;
+    font-size: clamp(1.1rem, 2.8vw, 1.35rem);
+    font-weight: 500;
+    line-height: 1.55;
+    color: var(--color-gemini-text);
+    text-wrap: pretty;
+  }
+}
+
+[x-cloak] {
+  display: none !important;
+}
+
+.gemini-modal-enter {
+  transition: opacity 0.35s ease;
+}
+
+.gemini-modal-enter-start,
+.gemini-modal-leave-end {
+  opacity: 0;
+}
+
+.gemini-modal-enter-end,
+.gemini-modal-leave-start {
+  opacity: 1;
+}
+
+.gemini-modal-enter .gemini-modal,
+.gemini-modal-leave .gemini-modal {
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
+}
+
+.gemini-modal-enter-start .gemini-modal,
+.gemini-modal-leave-end .gemini-modal {
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+}
+
+.gemini-modal-enter-end .gemini-modal,
+.gemini-modal-leave-start .gemini-modal {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@keyframes gemini-spin {
+  to {
+    --gemini-angle: 360deg;
+  }
+}
+
+@keyframes gemini-pulse {
+  0%,
+  100% {
+    opacity: 0.44;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.58;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes gemini-pulse-fast {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.88;
+    transform: scale(1.07);
+  }
+}
+
+@keyframes orb-drift-tl {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.62;
+  }
+  50% {
+    transform: translate(5%, 6%) scale(1.06);
+    opacity: 0.82;
+  }
+}
+
+@keyframes orb-drift-tr {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-5%, 5%) scale(1.08);
+    opacity: 0.8;
+  }
+}
+
+@keyframes orb-drift-bl {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.58;
+  }
+  50% {
+    transform: translate(6%, -4%) scale(1.05);
+    opacity: 0.78;
+  }
+}
+
+@keyframes orb-drift-br {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.62;
+  }
+  50% {
+    transform: translate(-5%, -5%) scale(1.07);
+    opacity: 0.84;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb,
+  .gemini-btn__halo,
+  .gemini-btn__ring {
+    animation: none;
+  }
+
+  .gemini-btn {
+    transition: none;
+  }
+}
